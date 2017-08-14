@@ -1,12 +1,17 @@
 package com.zzm.gateway.web;
 
-import com.zzm.gateway.event.RefreshRouteService;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.netflix.zuul.web.ZuulHandlerMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import rx.Observable;
+import rx.Subscriber;
+
+import com.zzm.gateway.event.RefreshRouteService;
 
 /**
  * Created by zzm on 2017/4/1.
@@ -17,6 +22,21 @@ public class DemoController {
 
     @Autowired
     RefreshRouteService refreshRouteService;
+    
+     public DemoController() {
+    	 Observable.interval(10, TimeUnit.SECONDS).subscribe(new Subscriber<Long>() {  
+      	      @Override public void onCompleted() {  
+      	    	  System.out.println("onCompleted");
+      	      }  
+      	      @Override public void onError(Throwable e) {  
+      	  
+      	      }  
+      	      @Override public void onNext(Long aLong) {  
+      	    	System.out.println("refreshRouteService.refreshRoute>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+      	    	 refreshRouteService.refreshRoute();
+      	      }  
+      	    });  
+	}
 
     @RequestMapping("/refreshRoute")
     public String refreshRoute(){
