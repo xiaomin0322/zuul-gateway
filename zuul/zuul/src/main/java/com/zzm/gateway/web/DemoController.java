@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * Created by zzm on 2017/4/1.
+ * 由于DemoController访问是/路径，如果路由有配置/**就会冲突
  */
 @RestController
 public class DemoController {
