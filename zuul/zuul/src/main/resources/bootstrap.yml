@@ -1,0 +1,11 @@
+spring:
+  cloud:
+    consul:
+      host: 192.168.1.234
+      port: 8500
+      discovery:
+        health-check-interval: 30s 
+        health-check-url: http://localhost:8080/health
+      config:
+        enabled: true
+        format: YAML
